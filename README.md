@@ -14,7 +14,7 @@ This project is a simple implementation of an ERC20-like token smart contract on
     ```
 2. Navigate to the project directory:
     ```bash
-    cd https://github.com/satyammjha/submission-for-types-of-function-assessment
+    cd <folder-path>
     ```
 3. Ensure you have [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed.
 
