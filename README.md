@@ -77,8 +77,4 @@ Contact: satyammjha0@gmail.com
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-## Introduction Video
-
-[![Watch the video](https://drive.google.com/file/d/12gCfCtxcCWry973VJaBUKPppAw0lfVo0/view?usp=sharing)](https://www.loom.com/share/9d1d2c68f3294acd8296e7cec072b9dd?sid=36afffc1-0964-4f42-b264-65bd42fac879)
+This project is licensed under the MIT License.
