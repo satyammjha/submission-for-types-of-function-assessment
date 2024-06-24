@@ -78,7 +78,9 @@ For common issues or problems, refer to the following:
 ## Authors
 
 Contributors names and contact info:
+
 Name - Satyam Kumar
+
 Contact - satyammjha0@gmail.com
 
 ## License
