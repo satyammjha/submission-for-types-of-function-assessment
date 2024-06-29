@@ -71,26 +71,6 @@ To use MyToken in Remix IDE:
    - After deployment, interact with the contract using the provided interface in Remix IDE.
    - Make sure to switch to the contract instance you deployed under the Deployed Contracts section.
 
-   **Example Transactions**:
-
-   - **Mint Tokens**: Only the contract owner can mint tokens.
-     ```javascript
-     // Replace 'toAddress' and 'amount' with appropriate values
-     await myToken.methods.mint(toAddress, amount).send({ from: accounts[0] });
-     ```
-
-   - **Transfer Tokens**: Any user can transfer tokens to another address.
-     ```javascript
-     // Replace 'toAddress' and 'amount' with appropriate values
-     await myToken.methods.transfer(toAddress, amount).send({ from: accounts[0] });
-     ```
-
-   - **Burn Tokens**: Any user can burn their own tokens.
-     ```javascript
-     // Replace 'amount' with the amount of tokens to burn
-     await myToken.methods.burn(amount).send({ from: accounts[0] });
-     ```
-
 ## Help
 
 For any issues or questions, please refer to the [Remix IDE documentation](https://remix-ide.readthedocs.io/en/latest/) or
