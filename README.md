@@ -1,79 +1,106 @@
-# Token Smart Contract
+# MyToken Project
+## Overview
+MyToken is an Ethereum-based ERC-20 token smart contract implemented in Solidity. It provides basic token functionalities and additional features such as token burning, ownership management, and permit functionality for gasless transactions.
 
-## Description
+## Functionality
 
-This project is a simple implementation of an ERC20-like token smart contract on the Ethereum blockchain. The contract allows for the creation, transfer, burning, and minting of tokens. It includes standard functionalities such as transferring tokens between accounts, burning tokens to reduce the total supply, and minting new tokens, which can only be done by the contract owner.
-
-## Problem Statement
-
-For this project, you will write a smart contract to create your own ERC20 token and deploy it using HardHat or Remix. Once deployed, you should be able to interact with it for your walk-through video. From your chosen tool, the contract owner should be able to mint tokens to a provided address and any user should be able to burn and transfer tokens.
-
-## Approached Solution
-
-1. **Smart Contract Implementation:** 
-   - Define the basic properties of the token, including its name, symbol, total supply, and owner.
-   - Implement functionalities for transferring tokens, burning tokens, and minting new tokens.
-   - Ensure that only the contract owner can mint new tokens.
-   - Emit appropriate events for transfers and burns.
-
-2. **Deployment:**
-   - Use HardHat for local deployment and testing.
-   - Provide a deployment script to automate the process.
-   - Guide on how to deploy using Remix for those who prefer a web-based interface.
-
-3. **Interaction:**
-   - Use HardHat console and Remix IDE to interact with the deployed contract.
-   - Provide example commands for transferring, burning, and minting tokens.
+- **Mint Tokens**: Only the contract owner can mint new tokens.
+- **Transfer Tokens**: Any user can transfer tokens to another address.
+- **Burn Tokens**: Any user can burn their own tokens.
 
 ## Getting Started
 
-### Executing Program
+### Installing
 
-1. Clone the repository to your local machine:
-    ```bash
-    git clone https://github.com/satyammjha/submission-for-types-of-function-assessment
-    ```
+To use MyToken in Remix IDE:
 
-2. Inside the project directory, in the terminal type:
-    ```bash
-    npm i
-    ```
-3. Open an additional terminal in your VS Code.
+1. **Open Remix IDE**: Navigate to [Remix IDE](https://remix.ethereum.org/).
 
-4. In the second terminal type:
-    ```bash
-    npx hardhat node
-    ```
+2. **Create a New File**: Click on the "+" button to create a new file and name it `MyToken.sol`.
 
-5. Back in the first terminal, type:
-    ```bash
-    npx hardhat run --network localhost scripts/deploy.js
-    ```
+3. **Copy the Contract**: Copy the following Solidity code into `MyToken.sol`:
 
-6. Copy the address of the deployed contract.
+   ```solidity
+   // SPDX-License-Identifier: MIT
+   // Compatible with OpenZeppelin Contracts ^5.0.0
+   pragma solidity ^0.8.20;
 
-7. Go to Remix IDE [Remix](https://remix.ethereum.org/).
+   import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+   import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+   import "@openzeppelin/contracts/access/Ownable.sol";
+   import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 
-8. Go to "Deploy and run transactions" and in the Environment select "Dev - Hardhat provider" and run the environment with the default link.
+   contract MyToken is ERC20, ERC20Burnable, Ownable, ERC20Permit {
+       constructor()
+           ERC20("MyToken", "MTK")
+           ERC20Permit("MyToken")
+       {}
 
-9. Then "At address" paste the address of the deployed contract.
+       function mint(address to, uint256 amount) public onlyOwner {
+           _mint(to, amount);
+       }
 
-After this, the project will be running on your localhost and you will use Remix IDE [Remix](https://remix.ethereum.org/) as the interface to work with the contract.
+       function transfer(address to, uint256 amount) public override returns (bool) {
+           _transfer(_msgSender(), to, amount);
+           return true;
+       }
+
+       function burn(uint256 amount) public override {
+           _burn(_msgSender(), amount);
+       }
+
+       function burnFrom(address account, uint256 amount) public override {
+           uint256 decreasedAllowance = allowance(account, _msgSender()) - amount;
+           _approve(account, _msgSender(), decreasedAllowance);
+           _burn(account, amount);
+       }
+   }
+   ```
+
+4. **Compile the Contract**: In Remix IDE, go to the Solidity Compiler tab, select `MyToken.sol`, and click on the `Compile` button to compile the contract.
+
+### Deploying and Interacting with the Contract
+
+1. **Deploy the Contract**:
+   - Navigate to the Deploy & Run Transactions tab in Remix IDE.
+   - Ensure you are connected to an Ethereum network (e.g., JavaScript VM for testing, or Injected Web3 for mainnet/testnet).
+   - Select `MyToken` in the contract dropdown.
+   - Click on the `Deploy` button to deploy the contract.
+
+2. **Interact with the Contract**:
+   - After deployment, interact with the contract using the provided interface in Remix IDE.
+   - Make sure to switch to the contract instance you deployed under the Deployed Contracts section.
+
+   **Example Transactions**:
+
+   - **Mint Tokens**: Only the contract owner can mint tokens.
+     ```javascript
+     // Replace 'toAddress' and 'amount' with appropriate values
+     await myToken.methods.mint(toAddress, amount).send({ from: accounts[0] });
+     ```
+
+   - **Transfer Tokens**: Any user can transfer tokens to another address.
+     ```javascript
+     // Replace 'toAddress' and 'amount' with appropriate values
+     await myToken.methods.transfer(toAddress, amount).send({ from: accounts[0] });
+     ```
+
+   - **Burn Tokens**: Any user can burn their own tokens.
+     ```javascript
+     // Replace 'amount' with the amount of tokens to burn
+     await myToken.methods.burn(amount).send({ from: accounts[0] });
+     ```
 
 ## Help
 
-For common issues or problems, refer to the following:
+For any issues or questions, please refer to the [Remix IDE documentation](https://remix-ide.readthedocs.io/en/latest/) or
 
-1. Ensure you have the correct version of Solidity compiler specified in `hardhat.config.js`.
-2. Verify that your local HardHat network is running.
-3. If you encounter deployment issues, ensure your scripts and contract paths are correct.
+reach out to me at satyammjha0@gmail.com
 
-## Authors
+## Author
 
-Contributors names and contact info:
-
-Name: Satyam Kumar
-Contact: satyammjha0@gmail.com
+- Satyam Kumar
+(https://github.com/satyammjha)
 
 ## License
 
