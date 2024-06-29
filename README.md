@@ -22,39 +22,33 @@ To use MyToken in Remix IDE:
 
    ```solidity
    // SPDX-License-Identifier: MIT
-   // Compatible with OpenZeppelin Contracts ^5.0.0
-   pragma solidity ^0.8.20;
+// Compatible with OpenZeppelin Contracts ^5.0.0
+pragma solidity ^0.8.20;
 
-   import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-   import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-   import "@openzeppelin/contracts/access/Ownable.sol";
-   import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-   contract MyToken is ERC20, ERC20Burnable, Ownable, ERC20Permit {
-       constructor()
-           ERC20("MyToken", "MTK")
-           ERC20Permit("MyToken")
-       {}
+contract MyToken is ERC20, ERC20Burnable, Ownable {
+    constructor(address initialOwner)
+        ERC20("satyamJha", "SJH")
+        Ownable(){
+        transferOwnership(initialOwner);
+    }
 
-       function mint(address to, uint256 amount) public onlyOwner {
-           _mint(to, amount);
-       }
+    function mint(address to, uint256 amount) public onlyOwner {
+        require(msg.sender == owner(), "Only the contract owner can mint tokens");
+        _mint(to, amount);
+    }
 
-       function transfer(address to, uint256 amount) public override returns (bool) {
-           _transfer(_msgSender(), to, amount);
-           return true;
-       }
+    function transfer(address to, uint256 amount) public override returns (bool) {
+        return super.transfer(to, amount);
+    }
+    function burn(uint256 amount) public override {
+        super.burn(amount);
+    }
+}
 
-       function burn(uint256 amount) public override {
-           _burn(_msgSender(), amount);
-       }
-
-       function burnFrom(address account, uint256 amount) public override {
-           uint256 decreasedAllowance = allowance(account, _msgSender()) - amount;
-           _approve(account, _msgSender(), decreasedAllowance);
-           _burn(account, amount);
-       }
-   }
    ```
 
 4. **Compile the Contract**: In Remix IDE, go to the Solidity Compiler tab, select `MyToken.sol`, and click on the `Compile` button to compile the contract.
@@ -63,7 +57,7 @@ To use MyToken in Remix IDE:
 
 1. **Deploy the Contract**:
    - Navigate to the Deploy & Run Transactions tab in Remix IDE.
-   - Ensure you are connected to an Ethereum network (e.g., JavaScript VM for testing, or Injected Web3 for mainnet/testnet).
+   - Ensure you are connected to an Ethereum network (Injected Web3 for mainnet/testnet).
    - Select `MyToken` in the contract dropdown.
    - Click on the `Deploy` button to deploy the contract.
 
