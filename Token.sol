@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract MyToken is ERC20, ERC20Burnable, Ownable {
     constructor(address initialOwner)
         ERC20("satyamJha", "SJH")
-        Ownable(){
+        Ownable(initialOwner){
         transferOwnership(initialOwner);
     }
 
