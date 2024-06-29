@@ -81,6 +81,8 @@ reach out to me at satyammjha0@gmail.com
 
 - Satyam Kumar
 (https://github.com/satyammjha)
+Email: satyammjha0@gmail.com
+Linkedin: https://www.linkedin.com/in/satyammjha/
 
 ## License
 
